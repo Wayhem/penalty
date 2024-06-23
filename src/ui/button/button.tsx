@@ -1,45 +1,46 @@
-import type { FC, ButtonHTMLAttributes } from 'react'
-import cn from 'clsx'
+import type { FC, ButtonHTMLAttributes } from "react";
+import cn from "clsx";
 
 export enum ButtonVariants {
-  default = 'default',
-  neutral = 'neutral',
-  primary = 'primary',
-  secondary = 'secondary',
-  accent = 'accent',
-  ghost = 'ghost',
-  link = 'link',
+  default = "default",
+  neutral = "neutral",
+  primary = "primary",
+  secondary = "secondary",
+  accent = "accent",
+  ghost = "ghost",
+  link = "link",
 }
 
 export enum ButtonSizes {
-  large = 'large',
-  normal = 'normal',
-  small = 'small',
-  tiny = 'tiny',
+  large = "large",
+  normal = "normal",
+  small = "small",
+  tiny = "tiny",
 }
 
 export interface ButtonProps {
-  variant?: ButtonVariants
-  size?: ButtonSizes
-  outline?: boolean
+  variant?: ButtonVariants;
+  size?: ButtonSizes;
+  outline?: boolean;
+  wide?: boolean;
 }
 
 const variantClass: Record<ButtonVariants, string> = {
-  [ButtonVariants.default]: '',
-  [ButtonVariants.neutral]: 'btn-neutral',
-  [ButtonVariants.primary]: 'btn-primary',
-  [ButtonVariants.secondary]: 'btn-secondary',
-  [ButtonVariants.link]: 'btn-link',
-  [ButtonVariants.ghost]: 'btn-ghost',
-  [ButtonVariants.accent]: 'btn-accent',
-}
+  [ButtonVariants.default]: "",
+  [ButtonVariants.neutral]: "btn-neutral",
+  [ButtonVariants.primary]: "btn-primary",
+  [ButtonVariants.secondary]: "btn-secondary",
+  [ButtonVariants.link]: "btn-link",
+  [ButtonVariants.ghost]: "btn-ghost",
+  [ButtonVariants.accent]: "btn-accent",
+};
 
 const sizeClass: Record<ButtonSizes, string> = {
-  [ButtonSizes.normal]: '',
-  [ButtonSizes.large]: 'btn-lg',
-  [ButtonSizes.small]: 'btn-sm',
-  [ButtonSizes.tiny]: 'btn-xs',
-}
+  [ButtonSizes.normal]: "",
+  [ButtonSizes.large]: "btn-lg",
+  [ButtonSizes.small]: "btn-sm",
+  [ButtonSizes.tiny]: "btn-xs",
+};
 
 const Button: FC<ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>> = ({
   children,
@@ -47,21 +48,23 @@ const Button: FC<ButtonProps & ButtonHTMLAttributes<HTMLButtonElement>> = ({
   variant = ButtonVariants.primary,
   size = ButtonSizes.normal,
   outline = false,
+  wide = false,
   ...props
 }) => {
   const rootClassName = cn(
-    'btn',
+    "btn",
     variantClass[variant],
     sizeClass[size],
-    { 'btn-outline': outline },
+    { "btn-outline": outline },
+    { "btn-wide": wide },
     className
-  )
+  );
 
   return (
     <button className={rootClassName} {...props}>
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

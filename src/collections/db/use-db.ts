@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+"use client";
+import { createContext, Dispatch, useReducer } from "react";
 import type { Database, User } from "./database";
 // Credentials would for sure not be handled like this on a normal app ()
 const defaultNonPersistentData = {
@@ -22,6 +23,13 @@ const defaultNonPersistentData = {
     },
   },
 };
+
+export const DatabaseContext = createContext<Database>(
+  defaultNonPersistentData
+);
+export const DatabaseDispatchContext = createContext<Dispatch<Action> | null>(
+  () => {}
+);
 
 export enum DatabaseActionsTypes {
   LOGIN = "userLogin",

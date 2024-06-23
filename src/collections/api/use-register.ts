@@ -1,7 +1,10 @@
-import { DatabaseActionsTypes, useDb } from "../db/use-db";
+import { useContext } from "react";
+import { DatabaseActionsTypes, DatabaseDispatchContext } from "../db/use-db";
 
 export const useRegister = () => {
-  const { dispatchDb } = useDb();
+  const dispatchDb = useContext(DatabaseDispatchContext);
+
+  if (!dispatchDb) return { register: () => {} };
 
   const register = (username: string, password: string) => {
     dispatchDb({

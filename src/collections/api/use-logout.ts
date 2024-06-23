@@ -1,14 +1,17 @@
-import { DatabaseActionsTypes, useDb } from "../db/use-db";
+import { useContext } from "react";
+import { DatabaseActionsTypes, DatabaseDispatchContext } from "../db/use-db";
 
 export const useLogout = () => {
-  const { dispatchDb } = useDb();
+  const dispatchDb = useContext(DatabaseDispatchContext);
 
-  const register = () => {
+  if (!dispatchDb) return { logout: () => {} };
+
+  const logout = () => {
     dispatchDb({
       type: DatabaseActionsTypes.LOGOUT,
       payload: {},
     });
   };
 
-  return { register };
+  return { logout };
 };
