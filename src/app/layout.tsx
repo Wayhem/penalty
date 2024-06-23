@@ -4,6 +4,8 @@ import "./globals.css";
 import { Navbar } from "@/ui";
 import { DatabaseContext, DatabaseDispatchContext, useDb } from "@/collections";
 import { DatabaseActionsTypes } from "@/collections/db/use-db";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const { db, dispatchDb } = useDb();
+
+  console.log({ db });
 
   const navbarElements = db.user.username ? (
     <div className="dropdown dropdown-end">
@@ -62,6 +66,7 @@ export default function RootLayout({
             {children}
           </DatabaseDispatchContext.Provider>
         </DatabaseContext.Provider>
+        <ToastContainer />
       </body>
     </html>
   );
