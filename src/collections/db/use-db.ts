@@ -61,7 +61,20 @@ const defaultNonPersistentData = {
       },
     ],
   },
-  requests: {},
+  requests: {
+    admin: [
+      {
+        id: "1",
+        requester: "satoshi",
+        tokens: 2,
+      },
+      {
+        id: "2",
+        requester: "1337Slayer",
+        tokens: 1,
+      },
+    ],
+  },
 };
 
 export const DatabaseContext = createContext<Database>(

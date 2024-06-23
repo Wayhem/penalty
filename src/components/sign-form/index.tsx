@@ -3,10 +3,11 @@
 import { Wrapper } from "./styles";
 import { FieldValues, useForm } from "react-hook-form";
 import { Button } from "@/ui";
-import { api, useDb } from "@/collections";
+import { api } from "@/collections";
 import { redirect, usePathname } from "next/navigation";
 import { ButtonVariants } from "../../ui/button/button";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function SignForm() {
   const {
@@ -34,7 +35,7 @@ export default function SignForm() {
     } catch (error) {
       let message = "Unknown Error";
       if (error instanceof Error) message = error.message;
-      alert(message);
+      toast.error(message);
     }
   };
 

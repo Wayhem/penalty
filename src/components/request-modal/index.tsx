@@ -40,10 +40,11 @@ export const RequestModal = () => {
         setErrors({});
         createRequest(loggedUsername, parseInt(tokens), username);
         toast("Request created successfully");
+        modalRef.current?.close();
       } catch (error) {
         let message = "Unknown Error";
         if (error instanceof Error) message = error.message;
-        alert(message);
+        toast.error(message);
       }
     } else {
       setErrors({

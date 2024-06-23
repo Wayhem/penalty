@@ -9,6 +9,10 @@ export enum ButtonVariants {
   accent = "accent",
   ghost = "ghost",
   link = "link",
+  info = "info",
+  success = "success",
+  warning = "warning",
+  error = "error",
 }
 
 export enum ButtonSizes {
@@ -33,6 +37,10 @@ const variantClass: Record<ButtonVariants, string> = {
   [ButtonVariants.link]: "btn-link",
   [ButtonVariants.ghost]: "btn-ghost",
   [ButtonVariants.accent]: "btn-accent",
+  [ButtonVariants.info]: "btn-info",
+  [ButtonVariants.success]: "btn-success",
+  [ButtonVariants.warning]: "btn-warning",
+  [ButtonVariants.error]: "btn-error",
 };
 
 const sizeClass: Record<ButtonSizes, string> = {
