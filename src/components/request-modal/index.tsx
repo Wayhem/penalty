@@ -81,7 +81,7 @@ export const RequestModal = () => {
               </div>
               <input
                 type="number"
-                min="1"
+                min="0"
                 max="10"
                 placeholder="Type here"
                 className={rootCnTokenInput}

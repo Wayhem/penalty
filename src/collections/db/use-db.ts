@@ -99,6 +99,8 @@ type Action = {
 };
 
 const dbReducer = (state: Database, action: Action) => {
+  const newId = uuidv4();
+
   switch (action.type) {
     case DatabaseActionsTypes.LOGIN:
       return { ...state, user: { ...action.payload, cookie: "AUTHED" } };
@@ -135,7 +137,6 @@ const dbReducer = (state: Database, action: Action) => {
         },
       };
     case DatabaseActionsTypes.APPROVE_TRANSACTION:
-      const newId = uuidv4();
       return {
         ...state,
         requests: {
@@ -187,6 +188,41 @@ const dbReducer = (state: Database, action: Action) => {
         user: {
           ...state.user,
           tokens: (state.user.tokens as number) - action.payload.tokens,
+        },
+      };
+    case DatabaseActionsTypes.DECLINE_TRANSACTION:
+      return {
+        ...state,
+        requests: {
+          ...state.requests,
+          [action.payload.acceptingUser]: [
+            ...(state.requests[action.payload.acceptingUser]?.filter(
+              ({ id }) => id !== action.payload.id
+            ) || []),
+          ],
+        },
+        transactions: {
+          ...state.transactions,
+          [action.payload.acceptingUser]: [
+            ...(state.transactions[action.payload.acceptingUser] || []),
+            {
+              id: newId,
+              targetUsername: action.payload.requesterUser,
+              tokens: action.payload.tokens,
+              status: TransactionStatus.declined,
+              type: TransactionType.outbound,
+            },
+          ],
+          [action.payload.requesterUser]: [
+            ...(state.transactions[action.payload.requesterUser] || []),
+            {
+              id: newId,
+              targetUsername: action.payload.acceptingUser,
+              tokens: action.payload.tokens,
+              status: TransactionStatus.declined,
+              type: TransactionType.inbound,
+            },
+          ],
         },
       };
     default:

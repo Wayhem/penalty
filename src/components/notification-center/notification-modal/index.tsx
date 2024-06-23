@@ -14,7 +14,9 @@ type Props = {
 
 export const ApproveModal = ({ modalRef, request }: Props) => {
   const { approveRequest } = api.useApproveRequest();
+  const { declineRequest } = api.useDeclineRequest();
   const { username } = api.useAuth();
+
   const onApprove = () => {
     try {
       approveRequest(
@@ -30,7 +32,22 @@ export const ApproveModal = ({ modalRef, request }: Props) => {
       toast.error(message);
     }
   };
-  const onReject = () => {};
+
+  const onReject = () => {
+    try {
+      declineRequest(
+        username || "",
+        request?.tokens || 0,
+        request?.requester || "",
+        request?.id || ""
+      );
+      modalRef.current?.close();
+    } catch (error) {
+      let message = "Unknown Error";
+      if (error instanceof Error) message = error.message;
+      toast.error(message);
+    }
+  };
 
   return (
     <>
