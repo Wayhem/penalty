@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, run the development server in `localhost:3000`:
 
 ```bash
 npm run dev
@@ -14,23 +14,32 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For production:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+# or
+bun build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Getting Started
 
-To learn more about Next.js, take a look at the following resources:
+This project tries to imitate a monorepo while not acting like one. There are MANY things to improve, however they key ones (which I didn't have enough time to finish) would be:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Testing E2E
+* Extend design system package (Inputs, navbar, modals) with documentation and configuration
+* Better use of SSR (not used to work on Next, first time after almost 4 years)
+* Virtualization of all lists as they lack pagination
+* Simulation for auth cookies / social login 
+* More validation on inputs
+* Better form handling on dialogs (they close by default on `<form></form>` components with buttons)
+* Simulated loaders and optimistic ui rendering for some functionality
+* Ability to swap dark and light theme (However by default it follows if you change your system theme)
+* String and i18n for texts
+* A lot of organization work regarding several components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
