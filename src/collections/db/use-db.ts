@@ -18,7 +18,7 @@ const defaultNonPersistentData = {
     },
     satoshi: {
       username: "satoshi",
-      password: "idontspeakjapanese",
+      password: "bitcoin",
       tokens: 10,
     },
     admin: {
