@@ -7,5 +7,5 @@ export const useAuth = () => {
 
   const isAuthed = typeof db.user?.cookie !== "undefined";
 
-  return { isAuthed, username: db.user.username };
+  return { isAuthed, ...db.user };
 };

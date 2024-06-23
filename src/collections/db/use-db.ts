@@ -134,6 +134,61 @@ const dbReducer = (state: Database, action: Action) => {
           ],
         },
       };
+    case DatabaseActionsTypes.APPROVE_TRANSACTION:
+      const newId = uuidv4();
+      return {
+        ...state,
+        requests: {
+          ...state.requests,
+          [action.payload.acceptingUser]: [
+            ...(state.requests[action.payload.acceptingUser]?.filter(
+              ({ id }) => id !== action.payload.id
+            ) || []),
+          ],
+        },
+        transactions: {
+          ...state.transactions,
+          [action.payload.acceptingUser]: [
+            ...(state.transactions[action.payload.acceptingUser] || []),
+            {
+              id: newId,
+              targetUsername: action.payload.requesterUser,
+              tokens: action.payload.tokens,
+              status: TransactionStatus.approved,
+              type: TransactionType.outbound,
+            },
+          ],
+          [action.payload.requesterUser]: [
+            ...(state.transactions[action.payload.requesterUser] || []),
+            {
+              id: newId,
+              targetUsername: action.payload.acceptingUser,
+              tokens: action.payload.tokens,
+              status: TransactionStatus.approved,
+              type: TransactionType.inbound,
+            },
+          ],
+        },
+        users: {
+          ...state.users,
+          [action.payload.requesterUser]: {
+            ...state.users[action.payload.requesterUser],
+            tokens:
+              state.users[action.payload.requesterUser].tokens +
+              action.payload.tokens,
+          },
+          [action.payload.acceptingUser]: {
+            ...state.users[action.payload.acceptingUser],
+            tokens:
+              (state.users[action.payload.acceptingUser].tokens as number) -
+              action.payload.tokens,
+          },
+        },
+        user: {
+          ...state.user,
+          tokens: (state.user.tokens as number) - action.payload.tokens,
+        },
+      };
     default:
       return state;
   }

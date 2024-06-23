@@ -1,14 +1,14 @@
 import { api, DatabaseContext } from "@/collections";
 import { useContext, useRef, useState } from "react";
 import { ApproveModal } from "./notification-modal";
+import { Request } from "@/collections/db/database";
 
 export const NotificationCenter = () => {
-  const { username } = api.useAuth();
+  const { username, tokens } = api.useAuth();
   const db = useContext(DatabaseContext);
   const { logout } = api.useLogout();
   const modalRef = useRef<HTMLDialogElement>(null);
-  const [requestUsername, setRequestUsername] = useState<string>();
-  const [requestTokens, setRequestTokens] = useState<number>();
+  const [request, setRequest] = useState<Request>();
 
   return username ? (
     <>
@@ -46,8 +46,7 @@ export const NotificationCenter = () => {
             <li key={id}>
               <a
                 onClick={() => {
-                  setRequestTokens(tokens);
-                  setRequestUsername(username);
+                  setRequest({ id, requester, tokens });
                   modalRef.current?.showModal();
                 }}
               >
@@ -85,13 +84,12 @@ export const NotificationCenter = () => {
           <li onClick={() => logout()}>
             <a>Logout</a>
           </li>
+          <li>
+            <a>Tokens: {tokens}</a>
+          </li>
         </ul>
       </div>
-      <ApproveModal
-        modalRef={modalRef}
-        requester={requestUsername}
-        tokens={requestTokens}
-      />
+      <ApproveModal modalRef={modalRef} request={request} />
     </>
   ) : (
     <></>

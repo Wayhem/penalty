@@ -16,9 +16,13 @@ export const useCreateRequest = () => {
     tokens: number,
     requestedUser: string
   ) => {
-    const foundUser = db.users[username];
+    const foundUser = db.users[requestedUser];
 
-    if (foundUser) {
+    if (foundUser && foundUser.tokens) {
+      if (foundUser.tokens < tokens) {
+        throw Error("Target doesn't have enough tokens");
+      }
+
       dispatchDb({
         type: DatabaseActionsTypes.REQUEST_TRANSACTION,
         payload: { username, tokens, requestedUser },
@@ -26,7 +30,7 @@ export const useCreateRequest = () => {
       return {};
     }
 
-    throw Error("User not found");
+    throw Error("User not available");
   };
 
   return { createRequest };

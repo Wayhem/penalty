@@ -35,7 +35,7 @@ export const RequestModal = () => {
   });
 
   const onSubmit = () => {
-    if (parseInt(tokens) > 0 && parseInt(tokens) < 10 && username) {
+    if (parseInt(tokens) > 0 && parseInt(tokens) <= 10 && username) {
       try {
         setErrors({});
         createRequest(loggedUsername, parseInt(tokens), username);
