@@ -70,9 +70,11 @@ export const RequestModal = () => {
                 className={rootCnUsernameSelect}
                 onChange={(e) => setUsername(e.target.value)}
               >
-                {Object.values(db.users).map(({ username: usernameOption }) => (
-                  <option key={usernameOption}>{usernameOption}</option>
-                ))}
+                {Object.values(db.users)
+                  .filter(({ username: dbUser }) => dbUser !== loggedUsername)
+                  .map(({ username: usernameOption }) => (
+                    <option key={usernameOption}>{usernameOption}</option>
+                  ))}
               </select>
             </label>
             <label className="form-control w-full max-w-xs">
